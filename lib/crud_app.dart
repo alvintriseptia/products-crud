@@ -9,7 +9,10 @@ class CrudApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: ThemeData(primaryColor: Colors.lightBlue, fontFamily: 'Poppins'),
+      theme: ThemeData(
+        primaryColor: Colors.lightBlue,
+        fontFamily: 'Poppins',
+      ),
       initialRoute: ProductListPage.routeName,
       initialBinding: ProductListBindings(),
       getPages: [
@@ -17,6 +20,16 @@ class CrudApp extends StatelessWidget {
           name: ProductListPage.routeName,
           page: () => const ProductListPage(),
           binding: ProductListBindings(),
+        ),
+        GetPage(
+          name: ProductDetailPage.routeName,
+          page: () => const ProductDetailPage(),
+          binding: ProductDetailBindings(),
+        ),
+        GetPage(
+          name: FormPage.routeName,
+          page: () => const FormPage(),
+          binding: FormBindings(),
         ),
       ],
     );
