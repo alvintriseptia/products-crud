@@ -13,8 +13,12 @@ class ImageNetwork extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       url,
-      errorBuilder: (context, error, stackTrace) =>
-          Image.asset(Assets.productPlaceholder),
+      errorBuilder: (context, error, stackTrace) => Image.asset(
+        Assets.productPlaceholder,
+        width: width,
+        height: height,
+        fit: fit ?? BoxFit.cover,
+      ),
       width: width ?? double.infinity,
       height: height ?? double.infinity,
       fit: fit ?? BoxFit.cover,

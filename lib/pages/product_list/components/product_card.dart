@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:products_crud/repositories/models/models.dart';
 
 import 'package:products_crud/preferences/preferences.dart';
@@ -23,14 +24,20 @@ class ProductCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(8)),
-                child: ImageNetwork(
-                  url: product.image,
-                  width: double.infinity,
-                  height: 150,
-                  fit: BoxFit.contain,
+              Container(
+                constraints: const BoxConstraints(
+                  minHeight: 150,
+                  maxHeight: 200,
+                ),
+                child: ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(8)),
+                  child: ImageNetwork(
+                    url: product.image,
+                    width: double.infinity,
+                    height: Get.height * 0.5,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               Spacing.v8,

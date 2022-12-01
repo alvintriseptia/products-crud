@@ -13,7 +13,7 @@ class ProductSkeleton extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 0.65,
+        mainAxisExtent: 350,
       ),
       padding: const EdgeInsets.all(16),
       itemCount: 6,
