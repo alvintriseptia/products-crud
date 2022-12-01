@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:products_crud/pages/form/sections/sections.dart';
+import 'package:products_crud/preferences/preferences.dart';
 
 import 'controllers/controllers.dart';
 
@@ -22,29 +24,17 @@ class FormPage extends GetView<FormController> {
       ),
       body: Form(
         key: Get.find<FormController>().formKey,
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
           children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Name',
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (Get.find<FormController>()
-                    .formKey
-                    .currentState!
-                    .validate()) {
-                  Get.snackbar('Success', 'Form is valid');
-                }
-              },
-              child: const Text('Submit'),
+            const FormFieldSection(),
+            Spacing.v16,
+            const UploadPhotoSection(),
+            ActionButtonSection(
+              onSubmitted: controller.isEditing.value
+                  ? controller.updateProduct
+                  : controller.insertProduct,
+              title: controller.isEditing.value ? 'Update' : 'Save',
             ),
           ],
         ),

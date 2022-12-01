@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:products_crud/pages/pages.dart';
+import 'package:products_crud/pages/product_list/controllers/controllers.dart';
 import 'package:products_crud/repositories/models/models.dart';
 
 import '../components/product_card.dart';
 
 class ProductSection extends StatelessWidget {
   final List<ProductModel> products;
-  const ProductSection({super.key, required this.products});
+  final bool isMyProduct;
+  const ProductSection(
+      {super.key, required this.products, this.isMyProduct = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +22,24 @@ class ProductSection extends StatelessWidget {
         mainAxisSpacing: 16,
         childAspectRatio: 0.65,
       ),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(16),
       itemCount: products.length,
       itemBuilder: (context, index) => ProductCard(
         product: products[index],
-        onTap: () => Get.toNamed(ProductDetailPage.routeName,
-            arguments: products[index]),
+        onTap: () async {
+          final result = await Get.toNamed(
+            ProductDetailPage.routeName,
+            arguments: {
+              'product': products[index],
+              'isMyProduct': isMyProduct,
+            },
+          );
+          if (result == true) {
+            Get.find<DatabaseProductListController>().getProducts();
+          }
+        },
       ),
     );
   }

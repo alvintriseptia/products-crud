@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
+import 'package:products_crud/repositories/providers/firebase_provider.dart';
 import 'package:products_crud/repositories/repositories.dart';
 
-class ProductListController extends GetxController
+class APIProductListController extends GetxController
     with StateMixin<List<ProductModel>> {
   final ProductProvider productProvider;
 
-  ProductListController({required this.productProvider});
+  APIProductListController({required this.productProvider});
 
   @override
   void onInit() {
@@ -18,6 +19,27 @@ class ProductListController extends GetxController
     try {
       final response = await productProvider.getProducts();
       change(response.body, status: RxStatus.success());
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    } finally {}
+  }
+}
+
+class DatabaseProductListController extends GetxController
+    with StateMixin<List<ProductModel>> {
+  final FirebaseProvider firebaseProvider = FirebaseProvider();
+
+  @override
+  void onInit() {
+    super.onInit();
+    getProducts();
+  }
+
+  Future<void> getProducts() async {
+    change(null, status: RxStatus.loading());
+    try {
+      final response = await firebaseProvider.getAllProducts();
+      change(response, status: RxStatus.success());
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
     } finally {}
